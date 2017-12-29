@@ -39,7 +39,7 @@
 <!--设置背景颜色-->
 	<div class="col-lg-4 col-lg-offset-4 col-xs-12"
 		style="position: absolute;">
-		<img src="<%=request.getContextPath()%>/image/选课样式.jpg" />
+		<img src="<%=request.getContextPath()%>/image/indexImage.jpg" />
 	</div>
 	<!--设置form所在div-->
 	<div class="col-lg-4 col-lg-offset-4 col-xs-12"
