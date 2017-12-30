@@ -58,6 +58,9 @@
 					<div class="col-lg-12 col-sm-12 col-xs-12 col-md-12">
 						周二：<select name="tueCourseId" class="input-sm" style="width:30%">
 							<option value=-1>请选择</option>
+							<c:forEach var="tueCourse" items="${tueCourses }">
+								<option value='${tueCourse.id }'>${tueCourse.courseName }</option>
+							</c:forEach>
 						</select><input class="input-sm" style="border:0px;width:40%;color:red;" readonly="readonly" />
 					</div>
 				</div>
@@ -65,6 +68,9 @@
 					<div class="col-lg-12 col-sm-12 col-xs-12 col-md-12">
 						周五：<select name="friCourseId" class="input-sm" style="width:30%;">
 							<option value=-1>请选择</option>
+							<c:forEach var="friCourse" items="${friCourses }">
+								<option value='${friCourse.id }'>${friCourse.courseName }</option>
+							</c:forEach>
 						</select><input class="input-sm" style="border:0px;width:40%;color: red;" readonly="readonly" />
 					</div>
 				</div>	
@@ -74,7 +80,7 @@
 	</div>
 <script type="text/javascript">
 	/*用于返回可选课程菜单*/
-	$(document).ready(function(){
+	/* $(document).ready(function(){
 		$.ajax({
 			url : 'tueCourse.do',
 			dataType : 'json',
@@ -99,7 +105,7 @@
 				}
 			}
 		})
-	}) 
+	})   */
 	/*用于显示课程花费*/
 	$("select").change(function(){
 		var id = $(this).val();
