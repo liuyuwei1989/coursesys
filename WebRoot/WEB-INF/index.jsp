@@ -99,7 +99,7 @@
 				}
 			}
 		})
-	})
+	}) 
 	/*用于显示课程花费*/
 	$("select").change(function(){
 		var id = $(this).val();

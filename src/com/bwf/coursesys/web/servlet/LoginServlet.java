@@ -44,10 +44,11 @@ public class LoginServlet extends HttpServlet {
 				if ("admin".equals(stu.getName())) {
 					request.setAttribute("msg", "登录失败，请核对账户密码");
 					request.getRequestDispatcher("index.jsp").forward(request, response);
+					return;
 				}
 
 				// 同步锁账号多处登录检查
-				synchronized (SessionAddLock.getSessionAddLock()) {
+				/*synchronized (SessionAddLock.getSessionAddLock()) {
 					// session 判断此用户是否登录过
 					if (SoleUserLoginListener.USER_SESSION.containsKey(stu)) {
 						request.setAttribute("msg", "此用户已登录");
@@ -60,7 +61,8 @@ public class LoginServlet extends HttpServlet {
 						SoleUserLoginListener.SESSIONID_USER.put(session.getId(), stu);
 						session.setAttribute("loginStu", stu);
 					}
-				}
+				}*/
+				session.setAttribute("loginStu", stu);
 				// 判断数据库中是否已完成选课，如果完成则进入提示选课完成的界面
 				if (stu.getFriCourseId() <= 0 && stu.getTueCourseId() <= 0) {
 					request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
@@ -70,11 +72,11 @@ public class LoginServlet extends HttpServlet {
 				}
 			} else {
 				request.setAttribute("msg", "登录失败，请核对账户密码");
-				request.getRequestDispatcher("index.jsp").forward(request, response);
+				request.getRequestDispatcher("login.jsp").forward(request, response);
 			}
 		} catch (SQLException e) {
 			request.setAttribute("msg", "请求超时，请重新登录");
-			request.getRequestDispatcher("index.jsp").forward(request, response);
+			request.getRequestDispatcher("login.jsp").forward(request, response);
 			e.printStackTrace();
 		}
 

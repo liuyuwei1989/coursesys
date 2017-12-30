@@ -35,7 +35,7 @@ public class AdminServlet extends HttpServlet {
 				request.setAttribute("msg", "账号密码错误");
 				request.getRequestDispatcher("admin.jsp").forward(request, response);
 			}else{
-				synchronized (SessionAddLock.getSessionAddLock()) {
+				/*synchronized (SessionAddLock.getSessionAddLock()) {
 					// session 判断此用户是否登录过
 					if (SoleUserLoginListener.USER_SESSION.containsKey(admin)) {
 						request.setAttribute("msg", "此用户已登录");
@@ -48,7 +48,7 @@ public class AdminServlet extends HttpServlet {
 						SoleUserLoginListener.SESSIONID_USER.put(session.getId(), admin);
 					}
 					session.setAttribute("admin", admin);
-				}
+				}*/
 				session.setAttribute("admin", admin);
 				request.getRequestDispatcher("/WEB-INF/adminIndex.jsp").forward(request, response);
 			}
