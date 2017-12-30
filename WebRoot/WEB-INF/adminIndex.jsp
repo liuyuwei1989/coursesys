@@ -77,11 +77,7 @@
         dropZoneTitle:"拖拽学生信息到这里，仅支持后缀名.xls",
         fileActionSettings : {
 			showZoom: false,
-		},
-		fileuploaded : function(){
-			alert("上传成功");
-		},
-			uploadAsync:true
+		}
     });
     $("#courseInput").fileinput({
     	language: 'zh',

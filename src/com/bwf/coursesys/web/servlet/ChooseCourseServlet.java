@@ -36,6 +36,7 @@ public class ChooseCourseServlet extends HttpServlet {
 			if(stu.getFriCourseId()>=0&&stu.getTueCourseId()>=0){
 				request.setAttribute("msg", "您的选课已完成，不能进行更改。");
 				request.getRequestDispatcher("/WEB-INF/detail.jsp").forward(request, response);
+				return;
 			}
 		} catch (SQLException e1) {
 			e1.printStackTrace();
