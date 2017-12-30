@@ -49,7 +49,7 @@ public class LoginServlet extends HttpServlet {
 				// 管理员禁止使用此页面进行登录
 				if ("admin".equals(stu.getName())) {
 					request.setAttribute("msg", "登录失败，请核对账户密码");
-					request.getRequestDispatcher("index.jsp").forward(request, response);
+					request.getRequestDispatcher("login.jsp").forward(request, response);
 					return;
 				}
 

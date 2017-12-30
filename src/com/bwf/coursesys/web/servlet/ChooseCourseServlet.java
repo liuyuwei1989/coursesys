@@ -33,9 +33,9 @@ public class ChooseCourseServlet extends HttpServlet {
 		try {
 			// 重新查询，如果选课完成则禁止重新选课操作。
 			stu = stuService.login(((Student)session.getAttribute("loginStu")).getLoginName(),((Student)session.getAttribute("loginStu")).getPassword());
-			if(stu.getFriCourseId()>=0&&stu.getTueCourseId()>=0){
+			if(stu.getFriCourseId()!=0&&stu.getTueCourseId()!=0){
 				request.setAttribute("msg", "您的选课已完成，不能进行更改。");
-				request.getRequestDispatcher("/WEB-INF/detail.jsp").forward(request, response);
+				response.sendRedirect("detail.jsp");
 				return;
 			}
 		} catch (SQLException e1) {
@@ -51,7 +51,7 @@ public class ChooseCourseServlet extends HttpServlet {
 				request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
 			}else{
 				request.setAttribute("msg", "选课已完成！");
-				request.getRequestDispatcher("/WEB-INF/detail.jsp").forward(request, response);
+				response.sendRedirect("detail.jsp");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
