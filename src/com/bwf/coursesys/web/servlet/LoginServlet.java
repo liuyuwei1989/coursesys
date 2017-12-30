@@ -2,6 +2,7 @@ package com.bwf.coursesys.web.servlet;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,10 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.bwf.courses.utils.SessionAddLock;
+import com.bwf.coursesys.entity.Course;
 import com.bwf.coursesys.entity.Student;
+import com.bwf.coursesys.service.ICourseService;
 import com.bwf.coursesys.service.IStuService;
+import com.bwf.coursesys.service.impl.CourseService;
 import com.bwf.coursesys.service.impl.StuService;
 import com.bwf.coursesys.web.listener.SoleUserLoginListener;
+
+import net.sf.json.JSONArray;
 
 /**
  * 学生登录所需要的Servlet
@@ -65,6 +71,7 @@ public class LoginServlet extends HttpServlet {
 				session.setAttribute("loginStu", stu);
 				// 判断数据库中是否已完成选课，如果完成则进入提示选课完成的界面
 				if (stu.getFriCourseId() <= 0 && stu.getTueCourseId() <= 0) {
+					queryCourseList(request,stu);
 					request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
 				} else {
 					request.setAttribute("msg", "您的选课已完成");
@@ -81,6 +88,20 @@ public class LoginServlet extends HttpServlet {
 		}
 
 	}
+
+	private void queryCourseList(HttpServletRequest request, Student stu) {
+		ICourseService courseService = new CourseService();
+		try {
+			List<Course> tueCourses = courseService.getTueCourseList(stu);
+			List<Course> friCourses = courseService.getFriCourseList(stu);
+			request.setAttribute("tueCourses", tueCourses);
+			request.setAttribute("friCourses", friCourses);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
