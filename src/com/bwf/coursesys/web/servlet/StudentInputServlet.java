@@ -26,6 +26,7 @@ import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
+import com.bwf.coursesys.exception.ExcelEception;
 import com.bwf.coursesys.service.IStuService;
 import com.bwf.coursesys.service.impl.StuService;
 import com.jspsmart.upload.SmartUpload;
@@ -38,8 +39,9 @@ public class StudentInputServlet extends HttpServlet {
 	private static final long serialVersionUID = 1108678719346962486L;
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
 		try {
-			PrintWriter out = response.getWriter();
+			
 			SmartUpload smu = new SmartUpload();
 			smu.initialize(this.getServletConfig(), request,response);
 			smu.upload();
@@ -58,9 +60,13 @@ public class StudentInputServlet extends HttpServlet {
 			out.print(JSONObject.fromObject(map));
 			
 		} catch (SmartUploadException e) {
-			e.printStackTrace();
+			out.print("数据格式可能有误，请检查上传表格");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			out.print("数据格式可能有误，请检查上传表格");
+		} catch (IllegalStateException e) {
+			out.print("数据可能有误，请检查上传表格");
+		} catch (ExcelEception e) {
+			out.print(e.getMessage());
 		}
 		
 	}

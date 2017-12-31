@@ -19,6 +19,7 @@ import com.bwf.coursesys.dao.BaseDAO;
 import com.bwf.coursesys.dao.ICourseDAO;
 import com.bwf.coursesys.entity.Course;
 import com.bwf.coursesys.entity.Student;
+import com.bwf.coursesys.exception.ExcelEception;
 
 public class CourseDAO extends BaseDAO implements ICourseDAO {
 	/**
@@ -80,10 +81,11 @@ public class CourseDAO extends BaseDAO implements ICourseDAO {
 	/**
 	 * @throws SQLException 
 	 * @throws IOException 
+	 * @throws ExcelEception 
 	 * 
 	 */
 	@Override
-	public void input(InputStream input) throws SQLException, IOException {
+	public void input(InputStream input) throws SQLException, IOException, ExcelEception {
 		Connection conn = qRunner.getDataSource().getConnection();
 		// 开启事务
 		conn.setAutoCommit(false);
@@ -103,6 +105,17 @@ public class CourseDAO extends BaseDAO implements ICourseDAO {
 		HSSFSheet sheet = wb.getSheetAt(0);
 		// 用于格式化数字类型
 		DecimalFormat df = new DecimalFormat("0");
+		// 检查表头是否符合要求
+				HSSFRow head = sheet.getRow(0);
+				if(!head.getCell(0).toString().equals("序号")||
+						!head.getCell(1).toString().equals("上课时间")||
+						!head.getCell(2).toString().equals("年纪")||
+						!head.getCell(3).toString().equals("课程名称")||
+						!head.getCell(4).toString().equals("费用")||
+						!head.getCell(5).toString().equals("招生人数")) {
+					wb.close();
+					throw new ExcelEception("表头不符合要求，请检查是否按以下排序\n序号，姓名，班级，登录账号，登录密码");
+				}
 		// 逐行提取，跳过第一行
 		for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
 			HSSFRow row = sheet.getRow(i);

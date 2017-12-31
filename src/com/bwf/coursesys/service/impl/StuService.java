@@ -16,6 +16,7 @@ import com.bwf.courses.utils.StudentCourseInfo;
 import com.bwf.coursesys.dao.IStudentDAO;
 import com.bwf.coursesys.dao.impl.StudentDAO;
 import com.bwf.coursesys.entity.Student;
+import com.bwf.coursesys.exception.ExcelEception;
 import com.bwf.coursesys.service.IStuService;
 
 public class StuService implements IStuService {
@@ -28,7 +29,7 @@ public class StuService implements IStuService {
 	private IStudentDAO studentDAO = new StudentDAO();
 
 	@Override
-	public void input(InputStream input) throws SQLException, IOException {
+	public void input(InputStream input) throws SQLException, IOException, ExcelEception {
 		studentDAO.input(input);
 	}
 

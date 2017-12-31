@@ -22,6 +22,7 @@ import com.bwf.courses.utils.StudentCourseInfo;
 import com.bwf.coursesys.dao.BaseDAO;
 import com.bwf.coursesys.dao.IStudentDAO;
 import com.bwf.coursesys.entity.Student;
+import com.bwf.coursesys.exception.ExcelEception;
 
 public class StudentDAO extends BaseDAO implements IStudentDAO {
 
@@ -32,9 +33,10 @@ public class StudentDAO extends BaseDAO implements IStudentDAO {
 	}
 /**
  * 用于导入学生信息
+ * @throws ExcelEception 
  */
 	@Override
-	public void input(InputStream input) throws SQLException, IOException {
+	public void input(InputStream input) throws SQLException, IOException, ExcelEception {
 
 		Connection conn = qRunner.getDataSource().getConnection();
 		// 开启事务
@@ -55,6 +57,16 @@ public class StudentDAO extends BaseDAO implements IStudentDAO {
 		HSSFSheet sheet = wb.getSheetAt(0);
 		// 用于格式化数字类型
 		DecimalFormat df = new DecimalFormat("0");
+		// 检查表头是否符合要求
+		HSSFRow head = sheet.getRow(0);
+		if(!head.getCell(0).toString().equals("序号")||
+				!head.getCell(1).toString().equals("姓名")||
+				!head.getCell(2).toString().equals("班级")||
+				!head.getCell(3).toString().equals("登陆账号")||
+				!head.getCell(4).toString().equals("登陆密码")) {
+			wb.close();
+			throw new ExcelEception("表头不符合要求，请检查是否按以下排序\n序号，姓名，班级，登录账号，登录密码");
+		}
 		// 逐行提取，跳过第一行
 		for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
 			HSSFRow row = sheet.getRow(i);

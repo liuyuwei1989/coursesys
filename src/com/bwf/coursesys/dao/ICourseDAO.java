@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.bwf.coursesys.entity.Course;
 import com.bwf.coursesys.entity.Student;
+import com.bwf.coursesys.exception.ExcelEception;
 
 public interface ICourseDAO {
 
@@ -24,6 +25,6 @@ public interface ICourseDAO {
 
 	void lockCourse(int tueCourseId) throws SQLException;
 
-	void input(InputStream input) throws SQLException, IOException;
+	void input(InputStream input) throws SQLException, IOException, ExcelEception;
 
 }

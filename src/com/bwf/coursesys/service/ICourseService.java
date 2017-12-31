@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.bwf.coursesys.entity.Course;
 import com.bwf.coursesys.entity.Student;
+import com.bwf.coursesys.exception.ExcelEception;
 
 public interface ICourseService {
 
@@ -18,6 +19,6 @@ public interface ICourseService {
 
 	int updateCourse(Student stu, int tueCourseId, int friCourseId) throws SQLException;
 
-	void input(InputStream input) throws SQLException, IOException;
+	void input(InputStream input) throws SQLException, IOException, ExcelEception;
 
 }

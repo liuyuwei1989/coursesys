@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.bwf.coursesys.exception.ExcelEception;
 import com.bwf.coursesys.service.ICourseService;
 import com.bwf.coursesys.service.IStuService;
 import com.bwf.coursesys.service.impl.CourseService;
@@ -42,8 +43,9 @@ public class CourseInputServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
 		try {
-			PrintWriter out = response.getWriter();
+			
 			SmartUpload smu = new SmartUpload();
 			smu.initialize(this.getServletConfig(), request,response);
 			smu.upload();
@@ -62,9 +64,13 @@ public class CourseInputServlet extends HttpServlet {
 			out.print(JSONObject.fromObject(map));
 			
 		} catch (SmartUploadException e) {
-			e.printStackTrace();
+			out.print("数据格式可能有误，请检查上传表格");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			out.print("数据格式可能有误，请检查上传表格");
+		} catch (IllegalStateException e) {
+			out.print("数据可能有误，请检查上传表格");
+		} catch (ExcelEception e) {
+			out.print(e.getMessage());
 		}
 	}
 

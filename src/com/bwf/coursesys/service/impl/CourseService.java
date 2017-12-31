@@ -10,6 +10,7 @@ import com.bwf.coursesys.dao.ICourseDAO;
 import com.bwf.coursesys.dao.impl.CourseDAO;
 import com.bwf.coursesys.entity.Course;
 import com.bwf.coursesys.entity.Student;
+import com.bwf.coursesys.exception.ExcelEception;
 import com.bwf.coursesys.service.ICourseService;
 
 public class CourseService implements ICourseService {
@@ -56,7 +57,7 @@ public class CourseService implements ICourseService {
 	}
 
 	@Override
-	public void input(InputStream input) throws SQLException, IOException {
+	public void input(InputStream input) throws SQLException, IOException, ExcelEception {
 		courseDAO.input(input);
 	}
 
