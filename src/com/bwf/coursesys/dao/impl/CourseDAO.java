@@ -114,7 +114,7 @@ public class CourseDAO extends BaseDAO implements ICourseDAO {
 						!head.getCell(4).toString().equals("费用")||
 						!head.getCell(5).toString().equals("招生人数")) {
 					wb.close();
-					throw new ExcelEception("表头不符合要求，请检查是否按以下排序\n序号，姓名，班级，登录账号，登录密码");
+					throw new ExcelEception("表头不符合要求，请检查是否按以下排序\n序号，上课时间，年级，课程名称，费用，招生人数");
 				}
 		// 逐行提取，跳过第一行
 		for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
