@@ -114,7 +114,7 @@ public class StudentDAO extends BaseDAO implements IStudentDAO {
 				"	) A\n" +
 				"LEFT JOIN course ON A.fId = course.id;";
 		
-		return qRunner.query(sql, new BeanListHandler<StudentCourseInfo>(StudentCourseInfo.class));
+		return qRunner.query(sql, new BeanListHandler<>(StudentCourseInfo.class));
 	}
 
 }
