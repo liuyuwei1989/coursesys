@@ -1,13 +1,9 @@
 package testpackage;
 
 import java.sql.SQLException;
-import java.util.List;
-
 import org.junit.Test;
 
 import com.bwf.coursesys.dao.impl.CourseDAO;
-import com.bwf.coursesys.dao.impl.StudentDAO;
-import com.bwf.coursesys.entity.Course;
 
 public class Test01 {
 	@Test
